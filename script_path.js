@@ -35,7 +35,7 @@ window.onload = function () {
 				.attr('stroke', '#000')
 				.attr('stroke-width', '3');
 
-	//----chart simple----
+	//----chart simple----проста забита вручну дуга
 
 	
 	var r = 50;
@@ -59,5 +59,40 @@ window.onload = function () {
 				.attr('stroke', '#000')
 				.transition().duration(1000)
 				.attr('fill', '#0000FF');
+	//--------normal chart -----------------------
+	var dataForNormalChart = [10, 50, 70];
+	var radius = 100;
+
+	var colorOfChartParts = d3.scale.ordinal()//попорядку задає колір
+				.range(['#C1C350', '#5BC34F', '#5D67C3']);
+
+	var canvas = d3.select('body').append('svg')
+				.attr('width', 300)
+				.attr('height', 300)
+	var groupElements = canvas.append('g')
+				.attr('transform', 'translate(100, 100)');
+	var arcN = d3.svg.arc()//створення кола
+				.innerRadius(50)
+				.outerRadius(radius);
+
+	var pie = d3.layout.pie()//фенкція яка правильно форматує дані
+				.value(function(d){return d;})
+
+	var arcs = groupElements.selectAll('.arc')
+				.data( pie(dataForNormalChart) )// відформатовані дані
+				.enter()
+				.append('g')
+				.attr('class', 'arc');
+
+	arcs.append('path')
+				.attr('d', arcN)//створення 
+				.attr('fill', function(d){return colorOfChartParts(d.data); }); //заливка відповідним кольором
+	arcs.append('text')
+				.text(function(d){ return d.data; })//всавляє текст в даному випадку число відповідне
+				.attr('transform', function(d){ return 'translate(' + arcN.centroid(d) + ')'})//переміщає текст по середині дуги
+				.attr('text-anchor', 'middle')//вирівює текст
+
+
+
 
 }
