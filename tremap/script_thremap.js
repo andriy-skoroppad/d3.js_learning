@@ -9,7 +9,7 @@ console.log('<<<<<three map start>>>>>>');
     var max = null;
     var maxFontSize = 20;
     var direction = -1;
-    var tooltipDivHeight = 68;
+    var tooltipDivHeight = 75;
     var tooltipDivWidth = 0;
 
     var color =  d3.scale.linear();//градієнт кольорів відносно величини
@@ -239,7 +239,7 @@ console.log('<<<<<three map start>>>>>>');
         tooltipDiv.querySelectorAll('.name')[0].innerHTML = d.name;
         tooltipDiv.querySelectorAll('.value')[0].innerHTML = d.value;
         //tooltipDivHeight = tooltipDiv[0][0].offsetHeight;
-        console.log(tooltipDiv.offsetHeight, tooltipDiv.innerHTML, tooltipDiv.querySelectorAll('.value')[0].offsetHeight);
+        // console.log(tooltipDiv.offsetHeight, tooltipDiv.innerHTML, tooltipDiv.querySelectorAll('.value')[0].offsetHeight);
 
         //console.log(d)
     }
@@ -247,7 +247,7 @@ console.log('<<<<<three map start>>>>>>');
     function tooltip(){
         console.log('fff', document.querySelectorAll('.chart div.tooltip')[0].offsetHeight);
         if(document.querySelectorAll('.chart div.tooltip')[0].offsetHeight > 0){
-           console.log('done');
+           // console.log('done');
             tooltipDivHeight = tooltipDiv[0][0].offsetHeight;
         }
         if(document.querySelectorAll('.chart div.tooltip')[0].offsetWidth > 0){
@@ -258,18 +258,18 @@ console.log('<<<<<three map start>>>>>>');
         var top = 0;
         var left = 0;
 
-        if(d3.mouse(this)[1] < tooltipDivHeight){
+        if(d3.mouse(this)[1] < (tooltipDivHeight + 10) ){
             top = (d3.mouse(this)[1] + 20) + 'px';
         } else {
-            top = (d3.mouse(this)[1] - tooltipDivHeight) + 'px';
+            top = (d3.mouse(this)[1] - tooltipDivHeight - 10) + 'px';
         }
 
-        if(graph.width - d3.mouse(this)[1] < tooltipDivWidth){
+        if(graph.width - d3.mouse(this)[0] < tooltipDivWidth){
             left = (d3.mouse(this)[0] - tooltipDivWidth + 10) + 'px';
         } else {
             left = d3.mouse(this)[0] + 'px';
         }
-
+console.log(top, left)
 
         //console.log(tooltipDiv[0][0].offsetHeight);
         tooltipDiv.style('top', top).style('left', left);
