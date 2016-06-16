@@ -9,6 +9,7 @@ console.log('<<<<<three map start>>>>>>');
     var max = null;
     var maxFontSize = 20;
     var direction = -1;
+    var tooltipDivHeight = 68;
 
     var color =  d3.scale.linear();//градієнт кольорів відносно величини
 
@@ -223,17 +224,27 @@ console.log('<<<<<three map start>>>>>>');
 
 
     }
-    chart.on('mousemove', tooltip);
+
     chart.on('mouseout', function(){tooltipDiv.style('display', 'none')});
     chart.on('mouseover', function(){tooltipDiv.style('display', 'block')});
+    chart.on('mousemove', tooltip);
+
+
+
 
     function tooltipChangeData(d){
+        //tooltip();
         tooltipDiv.select('.name').text(d.name);
         tooltipDiv.select('.value').text(d.value);
+        //tooltipDivHeight = tooltipDiv[0][0].offsetHeight;
+
         //console.log(d)
     }
     function tooltip(){
-        var top = (d3.mouse(this)[1] - tooltipDiv[0][0].offsetHeight - 5) + 'px';
+
+        //tooltipDivHeight = tooltipDiv[0][0].offsetHeight;
+
+        var top = (d3.mouse(this)[1] - tooltipDivHeight) + 'px';
         var left = d3.mouse(this)[0] + 'px';
         //console.log(tooltipDiv[0][0].offsetHeight);
         tooltipDiv.style('top', top).style('left', left);
