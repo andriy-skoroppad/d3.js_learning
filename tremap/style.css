@@ -1,0 +1,65 @@
+text {
+  pointer-events: none;
+}
+
+.grandparent text {
+  font-weight: bold;
+}
+
+rect.parent {
+  fill: none;
+  stroke: #fff;
+}
+
+rect.parent,
+.grandparent rect {
+  stroke-width: 2px;
+}
+
+.grandparent rect {
+  fill: orange;
+}
+
+.grandparent:hover rect {
+  fill: #ee9700;
+}
+
+.children rect.parent,
+.grandparent rect {
+  cursor: pointer;
+}
+
+.children rect.parent {
+  fill: #bbb;
+  fill-opacity: .5;
+}
+
+.children:hover rect.child {
+  fill: #bbb;
+}
+.chart {
+  width: 500px;
+  height: 500px;
+  background: #ddd;
+    position: relative;
+}
+
+/********************* tooltip *********************/
+.chart div.tooltip{
+    display: none;
+    position: absolute;
+    top: 0;
+    left: 0;
+    border: 1px solid #000000;
+    border-radius: 3px;
+    padding: 10px 5px;
+    background-color: #bbbbbb;
+}
+.chart div.tooltip .name,
+.chart div.tooltip .value{
+    display: block;
+    position: relative;
+    font-size: 15px;
+    text-align: center;
+
+}

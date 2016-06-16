@@ -5,6 +5,7 @@ window.onload = function () {
     var scale = d3.scale.linear()//маштабування відносне
                 .domain([0, 70])//відносно максимальної і мінімальної цифри значення
                 .range([0, /*width*/ 500]);//відносно розміру самого зображення
+
     var color =  d3.scale.linear()//градієнт кольорів відносно величини
                 .domain([0, 70])
                 .range(['#FF0101', /*gradient*/ '#01FF2B']);

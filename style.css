@@ -7,8 +7,9 @@ text {
 }
 
 rect {
-  fill: none;
-  stroke: #fff;
+    fill: none;
+    stroke: #fff;
+    stroke-width: 2px;
 }
 
 rect.parent,
