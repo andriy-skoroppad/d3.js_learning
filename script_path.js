@@ -146,6 +146,7 @@ d3.json("flare.json", function(root) {
     root.dx = width;
     root.dy = height;
     root.depth = 0;
+      console.log(root)
   }
 
   // Aggregate the values for internal nodes. This is normally done by the
