@@ -62,6 +62,7 @@ rect{
 .chart div.tooltip .name,
 .chart div.tooltip .value{
     display: block;
+    width: 100%;
     position: relative;
     font-size: 15px;
     text-align: center;
