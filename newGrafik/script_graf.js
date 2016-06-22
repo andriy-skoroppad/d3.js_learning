@@ -44,6 +44,10 @@ grandparent.append("text")
     .attr("dy", ".75em");
 
 d3.json("../flare.json", function(root) {
+    console.log( root , "my data");
+  });
+
+d3.json("../data.json", function(root) {
     console.log( root , svg);
   initialize(root);
   accumulate(root);
@@ -51,6 +55,7 @@ d3.json("../flare.json", function(root) {
   display(root);
 
   function initialize(root) {
+    console.log('>>>', root);
     root.x = root.y = 0;
     root.dx = width;
     root.dy = height;
