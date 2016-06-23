@@ -1,176 +1,159 @@
 {"name" : "Wog",
-        "done": 1254,
         "children" : [
          {
         "name" : "Wog",
-        "done": 1254,
         "children" : [
             {
                 "name": "team 1",
-                "done": 1254,
                 "children": [
                     {
                         "name": "user 1",
-                        "value": 700,
-                        "done": 1254
+                        "value": 650,
+                        "done": 1000
                     },
                     {
                         "name": "user 2",
-                        "value": 700,
-                        "done": 342
+                        "value": 500,
+                        "done": 457
                     },
                     {
                         "name": "user 3",
-                        "value": 700,
-                        "done": 43
+                        "value": 400,
+                        "done": 543
                     },
                     {
                         "name": "user 4",
-                        "value": 700,
-                        "done": 333
+                        "value": 100,
+                        "done": 123
                     }
                 ]
             },{
                 "name": "team 2",
-                
-                "done": 1254,
                 "children": [
                     {
                         "name": "user 1",
-                        "value": 700,
-                        "done": 12
+                        "value": 30,
+                        "done": 444
                     },
                     {
                         "name": "user 5",
-                        "value": 700,
+                        "value": 400,
                         "done": 342
                     },
                     {
                         "name": "user 4",
                         "value": 700,
-                        "done": 43
+                        "done": 453
                     },
                     {
                         "name": "user 7",
-                        "value": 700,
-                        "done": 333
+                        "value": 521,
+                        "done": 666
                     }
                 ]
             }
         ]
     },{
         "name" : "kaster",
-        
-        "done": 123,
         "children" : [
             {
                 "name": "team 1",
-                "value": 700,
-                "done": 1254,
                 "children": [
                     {
                         "name": "user 1",
-                        "value": 700,
-                        "done": 1254
+                        "value": 352,
+                        "done": 211
                     },
                     {
                         "name": "user 2",
                         "value": 700,
-                        "done": 342
+                        "done": 432
                     },
                     {
                         "name": "user 3",
-                        "value": 700,
-                        "done": 43
+                        "value": 20,
+                        "done": 222
                     },
                     {
                         "name": "user 4",
-                        "value": 700,
-                        "done": 333
+                        "value": 40,
+                        "done": 123
                     }
                 ]
             },{
                 "name": "team 2",
-                
-                "done": 1254,
                 "children": [
                     {
                         "name": "user 1",
-                        "value": 700,
-                        "done": 1254
+                        "value": 400,
+                        "done": 253
                     },
                     {
                         "name": "user 5",
-                        "value": 700,
-                        "done": 342
+                        "value": 280,
+                        "done": 123
                     },
                     {
                         "name": "user 4",
-                        "value": 700,
-                        "done": 43
+                        "value": 354,
+                        "done": 987
                     },
                     {
                         "name": "user 7",
-                        "value": 700,
-                        "done": 333
+                        "value": 465,
+                        "done": 876
                     }
                 ]
             }
         ]
     },{
         "name" : "dell",
-        
-        "done": 4567,
         "children" : [
             {
                 "name": "team 1",
-                "value": 700,
-                "done": 1254,
                 "children": [
                     {
                         "name": "user 1",
-                        "value": 700,
+                        "value": 234,
                         "done": 1254
                     },
                     {
                         "name": "user 2",
-                        "value": 700,
-                        "done": 342
+                        "value": 543,
+                        "done": 345
                     },
                     {
                         "name": "user 3",
-                        "value": 700,
-                        "done": 43
+                        "value": 234,
+                        "done": 65
                     },
                     {
                         "name": "user 4",
-                        "value": 700,
-                        "done": 333
+                        "value": 132,
+                        "done": 453
                     }
                 ]
             },{
                 "name": "team 2",
-                
-                "done": 1254,
                 "children": [
                     {
                         "name": "user 1",
-                        "value": 700,
+                        "value": 423,
                         "done": 1254
                     },
                     {
                         "name": "user 5",
-                        "value": 700,
+                        "value": 434,
                         "done": 342
                     },
                     {
                         "name": "user 4",
-                        "value": 700,
+                        "value": 651,
                         "done": 43
                     },
                     {
                         "name": "user 7",
-                        "value": 700,
+                        "value": 312,
                         "done": 333
                     }
                 ]
