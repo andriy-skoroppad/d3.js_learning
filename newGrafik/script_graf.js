@@ -112,11 +112,11 @@ d3.json("../data.json", function(root) {
         .classed("children", true)
         .on("click", transition);
 
-    g.selectAll(".child")
+    /*g.selectAll(".child")
         .data(function(d) { return d._children || [d]; })
       .enter().append("rect")
         .attr("class", "child")
-        .call(rect);
+        .call(rect);*/
 
     g.append("rect")
         .attr("class", "parent")
