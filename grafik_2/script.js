@@ -119,6 +119,14 @@ window.onload = function(){
         .attr("dy", ".75em")
         .attr("fill", "red");
 
+    var treemapCanvas = svg.insert("foreignObject", ".grandparent")
+            .attr("height", settings._heigth)
+            .attr("width", settings._width)
+            .append("svg")
+            .attr("height", settings._heigth)
+            .attr("width", settings._width);
+
+
     d3.json("../data.json", loadData);
 
     function loadData( data ){
@@ -142,11 +150,9 @@ window.onload = function(){
             .select("text")
             .text(name(data));
 
-        var main = svg.insert("g", ".grandparent")
+        var main = treemapCanvas.append("g")
             .datum(data)
-            .attr("class", "depth")
-            .attr("height", settings._heigth)
-            .attr("width", settings._width);
+            .attr("class", "depth");
 
         var children = main.selectAll("g")
             .data(data._children)
@@ -239,9 +245,9 @@ window.onload = function(){
 
     function name(data) {
         if(data.parent){
-            return name(data.parent) + " > " + data.name;
+            return (name(data.parent)? name(data.parent)+ " > " : "" )+ data.name;
         } else {
-            return data.name;
+            return "";
         }
       }
 
