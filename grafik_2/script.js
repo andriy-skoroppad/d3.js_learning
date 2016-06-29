@@ -101,6 +101,7 @@ window.onload = function(){
     var svg = d3.select( settings.mainBlock ).append("svg")
         .attr("width", settings._mainBlockWidth)
         .attr("height", settings._mainBlockHeight)
+        .attr("viewBox","0 0 " + settings._mainBlockWidth + " " +  settings._mainBlockHeight)
         .append("g")
         .attr("transform", "translate(" + settings.margin.left + "," + settings.margin.top + ")")
         .style("shape-rendering", "crispEdges");
@@ -119,12 +120,12 @@ window.onload = function(){
         .attr("dy", ".75em")
         .attr("fill", "red");
 
-    var treemapCanvas = svg.insert("foreignObject", ".grandparent")
+    var treemapCanvas = svg.insert("g", ".grandparent")
             .attr("height", settings._heigth)
             .attr("width", settings._width)
-            .append("svg")
+            /*.append("svg")
             .attr("height", settings._heigth)
-            .attr("width", settings._width);
+            .attr("width", settings._width)*/;
 
 
     d3.json("../data.json", loadData);
