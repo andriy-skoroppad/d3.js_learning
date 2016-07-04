@@ -2,7 +2,7 @@ window.onload = function(){
 
 
 var color =  d3.scaleLinear()//градієнт кольорів відносно величини
-        .domain([0, 1000])
+        .domain([0, 10000])
         .range(["#7fffd4" , "#2a3c01" ]);
 
     var x = d3.scaleLinear()
@@ -27,12 +27,12 @@ var color =  d3.scaleLinear()//градієнт кольорів відносн�
     var canvasForTreemap = d3.select(element).style("overflow", "hidden");
 
     function loadData(data){
-        initialize(data);
+        //initialize(data);
 
         accumulateAll(["value", "done"], data);
-
+        console.log(data);
         //layout(data);
-        var newData = treematStart(data.children[0]);
+        var newData = treematStart(data);
         console.log(newData);
 
          var svgForTreemap =  canvasForTreemap.append("svg")
@@ -48,7 +48,7 @@ var color =  d3.scaleLinear()//градієнт кольорів відносн�
              .enter()
              .append("g");
 
-         children.filter(function(d){ return d._children})
+         children.filter(function(d){ return !d.children})
              .classed("children", true)
              .on("click", transition);
 
@@ -58,15 +58,23 @@ var color =  d3.scaleLinear()//градієнт кольорів відносн�
              .append("title")
              .text(function(d){ return d3.format(",d")(d.value); })
 
+        function transition(data){
+            console.log(data.data);
+            svgForTreemap.remove();
+            loadData(data.data)
+
+        }
+
 
     }
 
     function treematStart(data){
+        data.depth = 0;
 
         var roots = d3.hierarchy(data, childrens);
-
+        console.log("childrens", data);
         function childrens(d){
-            console.log("childrens", d);
+            
             if(d.depth === 0){
                 return d.children;
             }
@@ -84,9 +92,7 @@ var color =  d3.scaleLinear()//градієнт кольорів відносн�
 
 
 
-    function transition(data){
-        //console.log(data);
-    }
+    
 
     //------- object prepear ----------
     function initialize(object) {
@@ -98,8 +104,9 @@ var color =  d3.scaleLinear()//градієнт кольорів відносн�
     }
 
     function accumulate(object, value) {
+        //object._children = object.children
+        
         if ( object.children ){
-            //object._children = object.children
             for(var i = 0; i < object.children.length; i++){
                 object.children[i]._parent = object;
             }
@@ -145,7 +152,7 @@ var color =  d3.scaleLinear()//градієнт кольорів відносн�
             .attr("y",function(d){return (d.y0); })
             .attr("width",function(d){return (d.x1) - (d.x0); })
             .attr("height",function(d){return (d.y1) - (d.y0); })
-            .attr("fill", function(d){return d.done ? color(d.done) : null;})
+            .attr("fill", function(d){return d.data.done ? color(d.data.done) : null;})
             .attr("stroke", "#fff");
     }
 
