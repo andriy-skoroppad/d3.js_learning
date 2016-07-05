@@ -195,6 +195,8 @@ window.onload = function(){
             var afterClick = mainNew.transition().duration(750);
 
             // Update the domain only after entering new elements.
+
+            console.log([data.x, data.x + data.dx], [data.y, data.y + data.dy]);
             x.domain([data.x, data.x + data.dx]);
             y.domain([data.y, data.y + data.dy]);
 

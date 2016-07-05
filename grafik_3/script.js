@@ -26,18 +26,18 @@ var color =  d3.scaleLinear()//градієнт кольорів відносн�
 
     var canvasForTreemap = d3.select(element).style("overflow", "hidden");
 
+    var svgForTreemap =  canvasForTreemap.append("svg")
+        .attr("height", 400)
+        .attr("width", 400);
+
     function loadData(data){
         //initialize(data);
 
         accumulateAll(["value", "done"], data);
-        console.log(data);
+
         //layout(data);
         var newData = treematStart(data);
         console.log(newData);
-
-         var svgForTreemap =  canvasForTreemap.append("svg")
-             .attr("height", 400)
-             .attr("width", 400);
 
          var main = svgForTreemap.append("g")
              .datum(newData)
@@ -56,16 +56,51 @@ var color =  d3.scaleLinear()//градієнт кольорів відносн�
              .attr("class", "parent")
              .call(rect)
              .append("title")
-             .text(function(d){ return d3.format(",d")(d.value); })
+             .text(function(d){ return d3.format(",d")(d.value); });
+
 
         function transition(data){
+            console.log("data",data);
             console.log(data.data);
-            svgForTreemap.remove();
-            loadData(data.data)
+
+
+            //console.log(x(data.x1) - x(data.x0), y(data.y1) - y(data.y0));
+
+            nodes.size([data.x1 - data.x0/* + x(data.x0)*/, data.y1 - data.y0/* + y(data.y0)*/]);
+
+
+
+            var mainNew =  loadData(data.data);
+            var beforeClick = main.transition().duration(750);
+            var afterClick = mainNew.transition().duration(750);
+
+            x.range([(data.x0), /*(data.x0) + */data.x1 - data.x0]);
+            y.range([(data.y0), /*(data.y0) + */data.y1 - data.y0]);
+            x.domain([0,(data.x1 - data.x0)]);
+            y.domain([0,(data.y1 - data.y0)]);
+            console.log(data.y0, y(0));
+
+
+            console.log("x", [(data.x0), /*(data.x0) + */(data.x1)]);
+            console.log("y", [(data.y0), /*(data.y0) + */(data.y1)]);
+
+            //beforeClick.style("shape-rendering", null);
+
+            mainNew.selectAll("text").style("fill-opacity", 0);
+
+            beforeClick.selectAll("rect").call(rect);
+            afterClick.selectAll("rect").call(rect);
+
+            beforeClick.remove()/*.each("end", function() {
+                //beforeClick.style("shape-rendering", "crispEdges");
+                transitioning = false;
+            });*/
+
+
 
         }
 
-
+        return children;
     }
 
     function treematStart(data){
@@ -141,17 +176,11 @@ var color =  d3.scaleLinear()//градієнт кольорів відносн�
     }
 
 
-    
-
-    
-
-    
-
     function rect(rect) {
-        rect.attr("x",function(d){ return  (d.x0); })
-            .attr("y",function(d){return (d.y0); })
-            .attr("width",function(d){return (d.x1) - (d.x0); })
-            .attr("height",function(d){return (d.y1) - (d.y0); })
+        rect.attr("x",function(d){ console.log("x(d.x0)",x(d.x0)); return  x(d.x0); })
+            .attr("y",function(d){console.log("y(d.y0)",y(d.y0)); return y(d.y0); })
+            .attr("width",function(d){return x(d.x1) - x(d.x0); })
+            .attr("height",function(d){return y(d.y1) - y(d.y0); })
             .attr("fill", function(d){return d.data.done ? color(d.data.done) : null;})
             .attr("stroke", "#fff");
     }
