@@ -1,17 +1,20 @@
+var color =  d3.scaleLinear()//градієнт кольорів відносно величини
+    .domain([0, 10000])
+    .range(["#7fffd4" , "#2a3c01" ]);
+
+var x = d3.scaleLinear()
+    .domain([0, 400])
+    .range([0, 400]);
+
+var y = d3.scaleLinear()
+    .domain([0, 400])
+    .range([0, 400]);
+
+
 window.onload = function(){
 
 
-var color =  d3.scaleLinear()//градієнт кольорів відносно величини
-        .domain([0, 10000])
-        .range(["#7fffd4" , "#2a3c01" ]);
 
-    var x = d3.scaleLinear()
-        .domain([0, 400])
-        .range([0, 400]);
-
-    var y = d3.scaleLinear()
-        .domain([0, 400])
-        .range([0, 400]);
 
     var  nodes = d3.treemap()
             .size([400, 400])
@@ -66,18 +69,27 @@ var color =  d3.scaleLinear()//градієнт кольорів відносн�
 
             //console.log(x(data.x1) - x(data.x0), y(data.y1) - y(data.y0));
 
-            nodes.size([data.x1 - data.x0/* + x(data.x0)*/, data.y1 - data.y0/* + y(data.y0)*/]);
+            //nodes.size([data.x1 - data.x0/* + x(data.x0)*/, data.y1 - data.y0/* + y(data.y0)*/]);
+            x.range([data.x0, data.x1 ]);
+            y.range([data.y0, data.y1 ]);
 
 
 
             var mainNew =  loadData(data.data);
-            var beforeClick = main.transition().duration(750);
-            var afterClick = mainNew.transition().duration(750);
+            main.selectAll("g").style("fill-opacity",0.2);
+            var beforeClick = main.transition().duration(5750);
+            var afterClick = mainNew.transition().duration(5750);
 
-            x.range([(data.x0), /*(data.x0) + */data.x1 - data.x0]);
-            y.range([(data.y0), /*(data.y0) + */data.y1 - data.y0]);
-            x.domain([0,(data.x1 - data.x0)]);
-            y.domain([0,(data.y1 - data.y0)]);
+
+            //x.range([(data.x0), /*(data.x0) + */data.x1 - data.x0]);
+            //y.range([(data.y0), /*(data.y0) + */data.y1 - data.y0]);
+            //x.domain([data.x, data.x + data.dx]);
+            //y.domain([data.y, data.y + data.dy]);
+
+            x.domain([(data.x0), /*(data.x0) + */data.x1]);
+            y.domain([(data.y0), /*(data.y0) + */data.y1]);
+            //x.domain([0,data.x1 - data.x0]);
+            //y.domain([0,data.y1 - data.y0]);
             console.log(data.y0, y(0));
 
 
@@ -88,14 +100,18 @@ var color =  d3.scaleLinear()//градієнт кольорів відносн�
 
             mainNew.selectAll("text").style("fill-opacity", 0);
 
-            beforeClick.selectAll("rect").call(rect);
             afterClick.selectAll("rect").call(rect);
+            beforeClick.selectAll("rect").call(rect);
+
 
             beforeClick.remove()/*.each("end", function() {
                 //beforeClick.style("shape-rendering", "crispEdges");
                 transitioning = false;
             });*/
-
+                x.domain([0, 400])
+                .range([0, 400]);
+                y.domain([0, 400])
+                .range([0, 400]);
 
 
         }
@@ -177,8 +193,9 @@ var color =  d3.scaleLinear()//градієнт кольорів відносн�
 
 
     function rect(rect) {
-        rect.attr("x",function(d){ console.log("x(d.x0)",x(d.x0)); return  x(d.x0); })
-            .attr("y",function(d){console.log("y(d.y0)",y(d.y0)); return y(d.y0); })
+        console.log(rect);
+        rect.attr("x",function(d){ return  x(d.x0); })
+            .attr("y",function(d){ return y(d.y0); })
             .attr("width",function(d){return x(d.x1) - x(d.x0); })
             .attr("height",function(d){return y(d.y1) - y(d.y0); })
             .attr("fill", function(d){return d.data.done ? color(d.data.done) : null;})
