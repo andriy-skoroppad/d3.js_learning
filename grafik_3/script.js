@@ -16,6 +16,7 @@ window.onload = function(){
 
 
 
+
     var  nodes = d3.treemap()
             .size([400, 400])
             .round(false);
@@ -33,14 +34,30 @@ window.onload = function(){
         .attr("height", 400)
         .attr("width", 400);
 
+
+    var transitioning = false;
+    //var backUp = canvasForTreemap.append("button")
+    //    .text("back");
+    //backUp.on("click", function(){
+    //    console.log(">>>>>>>>", elementParent);
+    //    transition(elementParent);
+    //});
+    var backUp, backUpDone = true;
     function loadData(data){
         //initialize(data);
+
+
+
+
 
         accumulateAll(["value", "done"], data);
 
         //layout(data);
+
+
+
         var newData = treematStart(data);
-        console.log(newData);
+
 
          var main = svgForTreemap.append("g")
              .datum(newData)
@@ -61,24 +78,40 @@ window.onload = function(){
              .append("title")
              .text(function(d){ return d3.format(",d")(d.value); });
 
-
+        console.log("sssssssss", newData);
         function transition(data){
-            console.log("data",data);
-            console.log(data.data);
 
 
-            //console.log(x(data.x1) - x(data.x0), y(data.y1) - y(data.y0));
+
+
+            if(transitioning) return false;
+
+            transitioning = true;
+
+
+
+
 
             //nodes.size([data.x1 - data.x0/* + x(data.x0)*/, data.y1 - data.y0/* + y(data.y0)*/]);
-            x.range([data.x0, data.x1 ]);
-            y.range([data.y0, data.y1 ]);
 
 
 
-            var mainNew =  loadData(data.data);
+
+
+
+            if(backUpDone){
+                x.range([data.x0, data.x1 ]);
+                y.range([data.y0, data.y1 ]);
+                var mainNew =  loadData(data.data);
+            } else {
+                x.range([data.x0, data.x1 ]);
+                y.range([data.y0, data.y1 ]);
+                var mainNew =  loadData(data);
+            };
+
             main.selectAll("g").style("fill-opacity",0.2);
-            var beforeClick = main.transition().duration(5750);
-            var afterClick = mainNew.transition().duration(5750);
+            var beforeClick = main.transition().duration(1750);
+            var afterClick = mainNew.transition().duration(1750);
 
 
             //x.range([(data.x0), /*(data.x0) + */data.x1 - data.x0]);
@@ -86,32 +119,54 @@ window.onload = function(){
             //x.domain([data.x, data.x + data.dx]);
             //y.domain([data.y, data.y + data.dy]);
 
+
+
+
             x.domain([(data.x0), /*(data.x0) + */data.x1]);
             y.domain([(data.y0), /*(data.y0) + */data.y1]);
+
             //x.domain([0,data.x1 - data.x0]);
             //y.domain([0,data.y1 - data.y0]);
-            console.log(data.y0, y(0));
 
 
-            console.log("x", [(data.x0), /*(data.x0) + */(data.x1)]);
-            console.log("y", [(data.y0), /*(data.y0) + */(data.y1)]);
 
-            //beforeClick.style("shape-rendering", null);
+
+
+
+
 
             mainNew.selectAll("text").style("fill-opacity", 0);
 
             afterClick.selectAll("rect").call(rect);
+
+            x.range([0, 400 ]);
+            y.range([0, 400 ]);
             beforeClick.selectAll("rect").call(rect);
 
 
-            beforeClick.remove()/*.each("end", function() {
-                //beforeClick.style("shape-rendering", "crispEdges");
+            beforeClick.remove().on("end", function() {
+
+                backUpDone = true;
                 transitioning = false;
-            });*/
+
+            });
                 x.domain([0, 400])
                 .range([0, 400]);
                 y.domain([0, 400])
                 .range([0, 400]);
+
+
+            if(data.data) {
+                backUp = canvasForTreemap.append("button")
+                    .datum(data.data._parent)
+                    .text(function (d) {
+                        return "back to " + d.name;
+                    });
+                backUp.on("click", function (d) {
+                    backUpDone = false;
+                    transition(d);
+                });
+            }
 
 
         }
@@ -123,7 +178,7 @@ window.onload = function(){
         data.depth = 0;
 
         var roots = d3.hierarchy(data, childrens);
-        console.log("childrens", data);
+
         function childrens(d){
             
             if(d.depth === 0){
@@ -132,12 +187,12 @@ window.onload = function(){
             return null;
         };
 
-        console.log(">>>>>", roots );
+
 
         var treemap = nodes(roots.sort(function(a, b) { return a.value - b.value; }))
             .descendants();
 
-            //console.log("treematStart>>", treemap);
+
         return treemap;
     }
 
@@ -156,10 +211,11 @@ window.onload = function(){
 
     function accumulate(object, value) {
         //object._children = object.children
-        
+
         if ( object.children ){
             for(var i = 0; i < object.children.length; i++){
                 object.children[i]._parent = object;
+                object.children[i].depth = null;
             }
             return object[value] = object.children.reduce(function(p, v) {return p + accumulate(v, value);}, 0);
         } else {
@@ -193,7 +249,7 @@ window.onload = function(){
 
 
     function rect(rect) {
-        console.log(rect);
+
         rect.attr("x",function(d){ return  x(d.x0); })
             .attr("y",function(d){ return y(d.y0); })
             .attr("width",function(d){return x(d.x1) - x(d.x0); })
