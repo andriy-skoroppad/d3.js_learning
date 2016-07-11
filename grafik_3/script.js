@@ -60,7 +60,12 @@ window.onload = function(){
              .attr("class", "parent")
              .call(rect)
              .append("title")
-             .text(function(d){ return d3.format(",d")(d.value); });
+             .text(function(d){ console.log(d.data.name); return d.data.name; });
+        
+        children.append("text")
+            .attr("dy", ".75em")
+            .text(function(d){return d.data.name; })
+            .call(text);
 
         console.log("sssssssss", newData);
 
@@ -90,9 +95,8 @@ window.onload = function(){
 
         return treemap;
     }
-function transition(data, main, oldObject){
 
-
+    function transition(data, main, oldObject){
 
             console.log("oldObject", oldObject);
 
@@ -116,17 +120,19 @@ function transition(data, main, oldObject){
 
                 mainNew.selectAll("text").style("fill-opacity", 0);
 
+                afterClick.selectAll("text").call(text).style("fill-opacity", 1);
                 afterClick.selectAll("rect").call(rect);
 
                 x.range([0, 400 ]);
                 y.range([0, 400 ]);
+                beforeClick.selectAll("text").call(text).style("fill-opacity", 0);
                 beforeClick.selectAll("rect").call(rect);
+                
 
                 beforeClick.remove().on("end", function() {
 
                     backUpDone = true;
                     transitioning = false;
-
 
                     if(data.data) {
                         backUp = canvasForTreemap.append("button")
@@ -142,7 +148,8 @@ function transition(data, main, oldObject){
 
                 });
 
-            } else {//up
+            } else {
+            //up
                 console.log(data);
                 
                 x.domain([(oldObject.x0), /*(data.x0) + */oldObject.x1]);
@@ -154,16 +161,14 @@ function transition(data, main, oldObject){
                 var beforeClick = main.transition().duration(750);
                 var afterClick = mainNew.transition().duration(750);
 
-                
                 x.range([oldObject.x0, oldObject.x1 ]);
                 y.range([oldObject.y0, oldObject.y1 ]);
 
                 afterClick.selectAll("rect").call(rect);
-
-                
-
+                afterClick.selectAll("text").call(text).style("fill-opacity", 1);
 
                 beforeClick.selectAll("rect").call(rect);
+                beforeClick.selectAll("text").call(text).style("fill-opacity", 0);
                 beforeClick.remove();
                 var  deleteButton = false;
                 backUp.filter(function(d, i){ if(d === data) deleteButton = true; return d === data;}).remove()
@@ -173,15 +178,10 @@ function transition(data, main, oldObject){
 
             };
 
-            
-
-            
                 x.domain([0, 400])
                 .range([0, 400]);
                 y.domain([0, 400])
                 .range([0, 400]);
-
-            
 
         }
 
@@ -222,6 +222,7 @@ function transition(data, main, oldObject){
     function layout(object) {
         if (object.children) {
             //treemap.nodes({_children: object._children});
+
             treematStart(object);
 
             //object._children.forEach(function(c) {
@@ -235,6 +236,17 @@ function transition(data, main, oldObject){
         }
     }
 
+    function text(text) {
+        text.attr("x",function(d){return x(d.x0); })
+            .attr("y",function(d){return y(d.y0); })
+            .attr("dy", 20)
+            .text(function(d){return d.data.name;})
+            .attr("fill", "#000")
+            .attr('display', function(d){
+                console.log(">>>>>this>>",this.offsetWidth);
+                return '';
+            });
+    }
 
     function rect(rect) {
 
