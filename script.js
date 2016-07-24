@@ -69,3 +69,68 @@ window.onload = function () {
             .attr('cy', 100)
             .attr('fill', '#800000')
 }
+
+function getNumber(max, count){
+
+    var setting = {
+        max : [[50, 0],[500, 2],[10000, 5]],
+        toNumb : [2, 5, 10, 20, 50, 100, 200, 250, 500, 1000,2000, 5000, 10000]
+    };
+
+    
+
+    console.log( max / count);
+    var findCorectNumber = false;
+
+    for(var maxS = 0; maxS < setting.max.length; maxS++){
+        if(max < setting.max[maxS][0] || maxS === (setting.max.length - 1)){
+            for(var i = 0; !findCorectNumber ; i++){
+                var numb = (max + i) / count;
+                for(var ii = setting.max[maxS][1]; ii <  setting.toNumb.length; ii++){
+                    if( (numb) % setting.toNumb[ii] === 0){
+                        findCorectNumber = true;
+                        return numb; 
+                    }
+                }
+            }
+            return "finde " + max;
+        }
+    }
+    
+        /*
+        if(max < 50){
+            for(var i = 0; !findCorectNumber ; i++){
+                var numb = (max + i) / count;
+                if( (numb) % 2 === 0 || (numb) % 5 === 0 || (numb) % 10 === 0 ){
+                    findCorectNumber = true;
+                    return numb;
+                }
+            }
+        } else if (max < 500){
+            for(var i = 0; !findCorectNumber ; i++){
+                var numb = (max + i) / count;
+                if( (numb) % 10 === 0 || (numb) % 20 === 0 || (numb) % 50 === 0 || (numb) % 100 === 0 || (numb) % 200 === 0 || (numb) % 250 === 0 || (numb) % 500 === 0 ){
+                    findCorectNumber = true;
+                    return numb;
+                }
+            }
+        } else if (max < 10000){
+            for(var i = 0; !findCorectNumber ; i++){
+                var numb = (max + i) / count;
+                if((numb) % 100 === 0 || (numb) % 200 === 0 || (numb) % 250 === 0 || (numb) % 500 === 0 ){
+                    findCorectNumber = true;
+                    return numb;
+                }
+            }
+        } else {
+            for(var i = 0; !findCorectNumber ; i++){
+                var numb = (max + i) / count;
+                if((numb) % 1000 === 0 || (numb) % 2000 === 0 || (numb) % 2500 === 0 || (numb) % 5000 === 0 ){
+                    findCorectNumber = true;
+                    return numb;
+                }
+            }
+        }
+        */
+    return 'none';
+}
