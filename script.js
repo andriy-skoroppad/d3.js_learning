@@ -73,8 +73,8 @@ window.onload = function () {
 function getNumber(max, count){
 
     var setting = {
-        max : [[50, 0],[500, 2],[10000, 5]],
-        toNumb : [2, 5, 10, 20, 50, 100, 200, 250, 500, 1000,2000, 5000, 10000]
+        max : [[50, 0],[500, 2],[10000, 2]],
+        toNumb : [2, 5, 10, 20, 50, 100, 150, 200, 250, 500, 1000,2000, 5000, 10000]
     };
 
     
@@ -87,9 +87,19 @@ function getNumber(max, count){
             for(var i = 0; !findCorectNumber ; i++){
                 var numb = (max + i) / count;
                 for(var ii = setting.max[maxS][1]; ii <  setting.toNumb.length; ii++){
-                    if( (numb) % setting.toNumb[ii] === 0){
-                        findCorectNumber = true;
-                        return numb; 
+                    if( (numb) % setting.toNumb[ii] === 0 ){
+                        if(numb > 120){
+                            if( (numb) % 50 === 0 ){
+                                findCorectNumber = true;
+                                return numb;
+                            }
+
+                        } else {
+                            findCorectNumber = true;
+                            return numb;
+
+                        }
+                         
                     }
                 }
             }
@@ -133,4 +143,12 @@ function getNumber(max, count){
         }
         */
     return 'none';
+}
+
+function scrollWidthButom(widthOll, screenWidth, scrollButom, minWidthB){
+    var widthB = screenWidth * scrollButom / widthOll;
+    if(widthB < minWidthB){
+        widthB = minWidthB;
+    };
+    return [[scrollButom - widthB, widthB], [widthOll - screenWidth, screenWidth]];
 }
