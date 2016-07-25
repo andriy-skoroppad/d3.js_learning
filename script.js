@@ -107,41 +107,6 @@ function getNumber(max, count){
         }
     }
     
-        /*
-        if(max < 50){
-            for(var i = 0; !findCorectNumber ; i++){
-                var numb = (max + i) / count;
-                if( (numb) % 2 === 0 || (numb) % 5 === 0 || (numb) % 10 === 0 ){
-                    findCorectNumber = true;
-                    return numb;
-                }
-            }
-        } else if (max < 500){
-            for(var i = 0; !findCorectNumber ; i++){
-                var numb = (max + i) / count;
-                if( (numb) % 10 === 0 || (numb) % 20 === 0 || (numb) % 50 === 0 || (numb) % 100 === 0 || (numb) % 200 === 0 || (numb) % 250 === 0 || (numb) % 500 === 0 ){
-                    findCorectNumber = true;
-                    return numb;
-                }
-            }
-        } else if (max < 10000){
-            for(var i = 0; !findCorectNumber ; i++){
-                var numb = (max + i) / count;
-                if((numb) % 100 === 0 || (numb) % 200 === 0 || (numb) % 250 === 0 || (numb) % 500 === 0 ){
-                    findCorectNumber = true;
-                    return numb;
-                }
-            }
-        } else {
-            for(var i = 0; !findCorectNumber ; i++){
-                var numb = (max + i) / count;
-                if((numb) % 1000 === 0 || (numb) % 2000 === 0 || (numb) % 2500 === 0 || (numb) % 5000 === 0 ){
-                    findCorectNumber = true;
-                    return numb;
-                }
-            }
-        }
-        */
     return 'none';
 }
 
