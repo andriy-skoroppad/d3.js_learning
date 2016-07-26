@@ -274,28 +274,30 @@ function scrollWidthButom(widthOll, screenWidth, scrollButom, minWidthB){
         });
     });
 });*/
+var chartHi;
 $(document).ready(function(){
 
-    $(function () {
+
         // Create the chart
-        $('#container').highcharts({
+        chartHi = $('#container').highcharts({
             chart: {
                 type: 'column'
             },
             scrollbar: {
                 enabled: true,
-                barBackgroundColor: 'gray',
-                barBorderRadius: 7,
+                height: 18,
+                barBackgroundColor: '#cccccc',
+                barBorderRadius: 9,
                 barBorderWidth: 0,
-                buttonBackgroundColor: 'gray',
+                buttonBackgroundColor: '#cccccc',
                 buttonBorderWidth: 0,
-                buttonArrowColor: 'yellow',
-                buttonBorderRadius: 7,
-                rifleColor: 'yellow',
-                trackBackgroundColor: 'white',
+                buttonArrowColor: '#6f6f6e',
+                buttonBorderRadius: 9,
+                rifleColor: '#6f6f6e',
+                trackBackgroundColor: 'transparent',
                 trackBorderWidth: 1,
-                trackBorderColor: 'silver',
-                trackBorderRadius: 7
+                trackBorderColor: '#cccccc',
+                trackBorderRadius: 9
             },
             title: {
                 text: 'Browser market shares. January, 2015 to May, 2015'
@@ -311,8 +313,6 @@ $(document).ready(function(){
                     x: 0,
                     useHTML: true,
                     formatter: function () {
-                        //var ss = JSON.stringify(this)
-                        console.log(this);
 
                         return '<div style="text-align: center;"><img height="80px" width="80px" src="' + this.value[1] + '"><img><br>' + this.value[0] + '</div>';
                     }
@@ -367,9 +367,28 @@ $(document).ready(function(){
                 }, {
                     name: ['Proprietary or Undetectable', 'img/meet4.jpg'],
                     y: 0
+                }, {
+                    name: ['Proprietary or Undetectable', 'img/meet4.jpg'],
+                    y: 0
+                }, {
+                    name: ['Proprietary or Undetectable', 'img/meet4.jpg'],
+                    y: 0
+                }, {
+                    name: ['Proprietary or Undetectable end', 'img/meet1.jpg'],
+                    y: 0
                 }]
             }]
         });
+
+    $('#button').click(function() {
+        var chart = $('#container').highcharts();
+        console.log(chart.xAxis[0]);
+        chart.xAxis[0].setExtremes();
+    });
+    $('#button2').click(function() {
+        var chart = $('#container').highcharts();
+        console.log(chart.pointCount);
+        chart.xAxis[0].setExtremes(chart.pointCount - 4 ,chart.pointCount - 1);
     });
 
-})
+});
