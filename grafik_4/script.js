@@ -1,10 +1,10 @@
 var x = d3.scaleLinear()
-    .domain([0, 400])
-    .range([0, 400]);
+    .domain([0, 100])
+    .range([0, 500]);
 
 var y = d3.scaleLinear()
-    .domain([0, 400])
-    .range([0, 400]);
+    .domain([0, 100])
+    .range([0, 600]);
 
 function text(text) {
         text.attr("x",function(d){return x(d.x0); })
@@ -20,10 +20,10 @@ function text(text) {
 
 function rect(rect) {
 
-    rect.attr("x",function(d){console.log(d); return  d.x0; })
-        .attr("y",function(d){ return d.y0; })
-        .attr("width",function(d){return d.x1 - d.x0; })
-        .attr("height",function(d){return d.y1 - d.y0; })
+    rect.attr("x",function(d){ return  x(d.x0); })
+        .attr("y",function(d){ return y(d.y0); })
+        .attr("width",function(d){return x(d.x1) - x(d.x0); })
+        .attr("height",function(d){return y(d.y1) - y(d.y0); })
         .attr("fill", function(d){return '#000';})
         .attr("stroke", "#fff");
     }    
@@ -48,20 +48,23 @@ function findeMax(data, name){
     return max;
 }
 
-function prepearForVisual(height, width, margin, spaceBetwin, data){
+function prepearForVisual( width, margin, spaceBetwin, data){
+    var height = findeMax(data, 'value');
+    y.domain([0, height]);
+    x.domain([0, width]);
     var namberOfElement = dataMy.length;
-    var dataSpace = width - margin * 2 - spaceBetwin * (namberOfElement - 1);
+    var dataSpace = width - spaceBetwin * (namberOfElement - 1);
     var widthOfElement = dataSpace / namberOfElement;
 
     var grafHeigth = height - margin * 2;
 
-    var zeroPoint = height - margin;
+    var zeroPoint = height;
 
-    var max = findeMax(data, 'value');
+    
 
     for (var i = 0; i < data.length; i++) {
-        data[i].y0 = max - data[i].value;//вниз
-        data[i].x0 = margin + i * widthOfElement + i * spaceBetwin;
+        data[i].y0 = height - data[i].value;//вниз
+        data[i].x0 = i * widthOfElement + i * spaceBetwin;
         data[i].y1 = zeroPoint;
         data[i].x1 = data[i].x0 +  widthOfElement;
     }
@@ -69,7 +72,8 @@ function prepearForVisual(height, width, margin, spaceBetwin, data){
 }
 
 function newElement(height, width){
-    prepearForVisual(height, width, 5, 5, dataMy);
+
+    prepearForVisual( 100, 5, 5, dataMy);
     console.log(dataMy);
     var element = document.querySelector(".chart");
     var canvasForTreemap = d3.select(element).style("overflow", "hidden");
@@ -89,7 +93,7 @@ function newElement(height, width){
 
 window.onload = function(){
 
-    newElement(400, 400);
+    newElement(500, 600);
 
 
 
