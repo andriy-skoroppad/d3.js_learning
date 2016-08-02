@@ -20,11 +20,11 @@ function text(text) {
 
 function rect(rect) {
 
-    rect.attr("x",function(d){ return  x(d.x0); })
-        .attr("y",function(d){ return y(d.y0); })
-        .attr("width",function(d){return x(d.x1) - x(d.x0); })
-        .attr("height",function(d){return y(d.y1) - y(d.y0); })
-        .attr("fill", function(d){return d.data.done ? color(d.data.done) : null;})
+    rect.attr("x",function(d){console.log(d); return  d.x0; })
+        .attr("y",function(d){ return d.y0; })
+        .attr("width",function(d){return d.x1 - d.x0; })
+        .attr("height",function(d){return d.y1 - d.y0; })
+        .attr("fill", function(d){return '#000';})
         .attr("stroke", "#fff");
     }    
 
@@ -37,25 +37,52 @@ var dataMy = [
     {name: "sdas", value: 210}
 ];
 
+function findeMax(data, name){
+    var max = null;
+    for (var i = 0; i < data.length; i++) {
+        if(max < data[i][name]){
+            max = data[i][name];
+        }
+
+    }
+    return max;
+}
+
 function prepearForVisual(height, width, margin, spaceBetwin, data){
     var namberOfElement = dataMy.length;
     var dataSpace = width - margin * 2 - spaceBetwin * (namberOfElement - 1);
     var widthOfElement = dataSpace / namberOfElement;
 
     var grafHeigth = height - margin * 2;
+
+    var zeroPoint = height - margin;
+
+    var max = findeMax(data, 'value');
+
+    for (var i = 0; i < data.length; i++) {
+        data[i].y0 = max - data[i].value;//вниз
+        data[i].x0 = margin + i * widthOfElement + i * spaceBetwin;
+        data[i].y1 = zeroPoint;
+        data[i].x1 = data[i].x0 +  widthOfElement;
+    }
     
 }
 
 function newElement(height, width){
+    prepearForVisual(height, width, 5, 5, dataMy);
+    console.log(dataMy);
     var element = document.querySelector(".chart");
     var canvasForTreemap = d3.select(element).style("overflow", "hidden");
     var svgForTreemap =  canvasForTreemap.append("svg")
         .attr("height", height)
         .attr("width", width);
+        console.log('dddd')
 
     var main = svgForTreemap.append("g")
+        .selectAll("g")
         .data(dataMy)
         .enter()
+        .append("rect")
         .call(rect)
 
 }
